@@ -1,0 +1,11 @@
+<div>
+    <% customers.forEach(function(customer) { %>
+        <div>
+            <p><strong>Name:</strong> <%= customer.customer_name %></p>
+            <p><strong>Email:</strong> <%= customer.customer_email %></p>
+            <p><strong>Phone:</strong> <%= customer.customer_phoneNumber %></p>
+            <a href="/customer/<%= customer.id %>">View Details</a>
+        </div>
+    <% }); %>
+</div>
+
