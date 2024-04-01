@@ -25,7 +25,7 @@ const conn = mysql.createConnection({
 // });
 
 
-router.get('/', authController.home);
+router.get('/api/home', authController.home);
 
 router.get('/details/:id', authController.details);
 

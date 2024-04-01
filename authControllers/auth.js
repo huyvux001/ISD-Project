@@ -81,11 +81,11 @@ exports.home = async (req, res) => {
                 console.error(error);
                 return res.status(500).send('Error fetching customers');
             }
-            res.render('home.ejs', { customers: results });
+            console.log(results);
+            return res.json(results)
         }
     );
 };
-
 
 // TODO: Add a new customer
 exports.addCustomer = async (req, res) => {
@@ -136,13 +136,15 @@ exports.details = async (req, res) => {
 
         if (customerResults.length > 0) {
             const customer = customerResults[0];
-            const query = 'SELECT * FROM Orders WHERE customer_id = ?'; 
+            const query = 'SELECT * FROM Orders WHERE customer_id = ?';
             conn.query(query, [customerId], (error, orderResults) => {
                 if (error) {
                     console.error(error);
                     return res.status(500).send('Error fetching related details');
                 }
-                res.render('details.ejs', { customer: customer, orders: orderResults });
+                res.json({
+                    customer: customer, orders: orderResults
+                });
             });
         } else {
             return res.status(404).send('Customer not found');

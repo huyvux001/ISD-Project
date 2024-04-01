@@ -5,26 +5,28 @@ const externalCSS = path.join(__dirname, './externalCSS');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const cors = require('cors');
 
 const app = express();
 
 dotenv.config({path: './.env'});
 
-app.set('view engine', 'ejs');
-
-app.use(express.static(externalCSS));
+app.use(cors())
 
 
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 app.use(cookieParser());
 
+
 app.use('/', require('./appMethod/pages'));
 app.use('/auth', require('./appMethod/auth'));
 
+app.use(express.static(path.join(__dirname, 'views')));
+
 //TODO 
 app.get('/', (req, res) => {
-    res.render("home.ejs");
+    res.sendFile(path.join(__dirname, 'views', 'pages', 'home.html'));
 });
 
 app.listen(8000, () => {
