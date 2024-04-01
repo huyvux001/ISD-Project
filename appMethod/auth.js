@@ -7,11 +7,12 @@ const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 // POST method
+// TODO
+// router.post('/addCustomer', upload.single('file'), authController.isLoggedIn, authController.addCustomer )
+
+router.post('/addCustomer', upload.single('file'), authController.addCustomer )
 
 router.post('/login', authController.login );
-
-router.post('/addCustomer', upload.single('file'), authController.isLoggedIn, authController.addCustomer )
-
 
 router.get('/logout', authController.logout);
 

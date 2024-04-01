@@ -12,25 +12,25 @@ const conn = mysql.createConnection({
 
 // GET method
 
-router.get('/', authController.isLoggedIn, (req, res) => {
-  res.render('home.ejs', {
-    user: req.user
-  });
-});
+// router.get('/', authController.isLoggedIn, (req, res) => {
+//   res.render('home.ejs', {
+//     user: req.user
+//   });
+// });
 
-router.get('/', (req, res) => {
-  res.render('home.ejs');
-});
+// router.get('/customer/:id', authController.isLoggedIn, authController.details);
 
-router.get('/customer/:id', authController.isLoggedIn, authController.details);
+// router.get('/addCustomer', authController.isLoggedIn, (req, res) => {
+//   res.render('addCustomer.ejs');
+// });
 
-router.get('/addCustomer', authController.isLoggedIn, (req, res) => {
+
+router.get('/', authController.home);
+
+router.get('/details/:id', authController.details);
+
+router.get('/addCustomer', (req, res) => {
   res.render('addCustomer.ejs');
 });
-
-router.get('/addCustomer', authController.isLoggedIn, (req, res) => {
-  res.render('addCustomer.ejs');
-});
-
 
 module.exports = router;

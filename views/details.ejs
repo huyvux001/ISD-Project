@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+</head>
+<body>
+    <div class="customer-details">
+        <h2>Customer Details</h2>
+        <div><strong>Name:</strong> <%= customer.customer_name %></div>
+        <div><strong>Code:</strong> <%= customer.customer_code %></div>
+        <div><strong>Citizen ID:</strong> <%= customer.customer_citizenID %></div>
+        <div><strong>Phone Number:</strong> <%= customer.customer_phoneNumber %></div>
+        <% orders.forEach(function(order) { %>
+            <div><p><strong>Order Date:</strong> <%= order.order_date %></p></div>
+            <div><p><strong>Order Status:</strong> <%= order.order_status %></p></div>
+        <% }); %>
+        <div><strong>Email:</strong> <%= customer.customer_email %></div>
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>

@@ -75,7 +75,7 @@ exports.logout = async (req, res) => {
 exports.home = async (req, res) => {
 
     conn.query(
-        'SELECT customer_code, customer_name, customer_email, customer_phoneNumber FROM Customers',
+        'SELECT * FROM Customers',
         (error, results) => {
             if (error) {
                 console.error(error);
@@ -124,19 +124,26 @@ exports.addCustomer = async (req, res) => {
 
 // TODO: View a customer's details
 exports.details = async (req, res) => {
-    const customerId = req.params.id; 
+    const customerId = req.params.id;
 
-    const query = 'SELECT * FROM Customers WHERE customer_id = ?'; //TODO
+    const customerQuery = 'SELECT * FROM Customers WHERE customer_id = ?';
 
-    conn.query(query, [customerId], (error, results) => {
+    conn.query(customerQuery, [customerId], (error, customerResults) => {
         if (error) {
             console.error(error);
             return res.status(500).send('Error fetching customer details');
         }
 
-        if (results.length > 0) {
-            const customer = results[0];
-            res.render('details.ejs', { customer: customer });
+        if (customerResults.length > 0) {
+            const customer = customerResults[0];
+            const query = 'SELECT * FROM Orders WHERE customer_id = ?'; 
+            conn.query(query, [customerId], (error, orderResults) => {
+                if (error) {
+                    console.error(error);
+                    return res.status(500).send('Error fetching related details');
+                }
+                res.render('details.ejs', { customer: customer, orders: orderResults });
+            });
         } else {
             return res.status(404).send('Customer not found');
         }

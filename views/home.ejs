@@ -1,11 +1,23 @@
-<div>
-    <% customers.forEach(function(customer) { %>
-        <div>
-            <p><strong>Name:</strong> <%= customer.customer_name %></p>
-            <p><strong>Email:</strong> <%= customer.customer_email %></p>
-            <p><strong>Phone:</strong> <%= customer.customer_phoneNumber %></p>
-            <a href="/customer/<%= customer.id %>">View Details</a>
-        </div>
-    <% }); %>
-</div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <% customers.forEach(function(customer) { %>
+            <div>
+                <p><strong>Name:</strong> <%= customer.customer_name %></p>
+                <p><strong>Code:</strong> <%= customer.customer_code %></p>
+                <p><strong>Phone:</strong> <%= customer.customer_phoneNumber %></p>
+                <p><strong>Email:</strong> <%= customer.customer_email %></p>
+                <a href="/details/<%= customer.customer_id %>">View Details</a>
+            </div>
+        <% }); %>
+    </div>
+    
+    
+</body>
+</html>

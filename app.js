@@ -19,12 +19,12 @@ app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use('/', require('./appMethod/pages'));
-// app.use('/auth', require('./appMethod/auth'));
+app.use('/', require('./appMethod/pages'));
+app.use('/auth', require('./appMethod/auth'));
 
 //TODO 
 app.get('/', (req, res) => {
-    res.send('Home');
+    res.render("home.ejs");
 });
 
 app.listen(8000, () => {

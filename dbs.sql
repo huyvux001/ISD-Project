@@ -81,23 +81,23 @@ create table Contract (
     );
     
     
--- -- Test
--- INSERT INTO ContractCategories (category_id, category_name) VALUES (1, 'Basic Plan');
--- INSERT INTO ContractCategories (category_id, category_name) VALUES (2, 'Premium Plan');
--- INSERT INTO CustomerType (customer_type) VALUES ('Bronze');
--- INSERT INTO CustomerType (customer_type) VALUES ('Silver');
--- INSERT INTO Contract (category_id, contract_code) VALUES (1, 'CT0001');
--- INSERT INTO Contract (category_id, contract_code) VALUES (1, 'CT0002');
--- INSERT INTO Contract (category_id, contract_code) VALUES (2, 'CT0002');
--- -- Assuming you're going to link this sales record to a customer later
--- INSERT INTO Customers (sales_id, customer_typeID, customer_code, customer_name, customer_email, customer_phoneNumber, customer_citizenID, contract_id, active_account) 
--- VALUES (1, 1, 'CUST0001', 'John Doe', 'john@example.com', '555-1234', 123456789, 1, 'Yes');
--- INSERT INTO Sales (sales_id, sales_name, customer_id) VALUES (1, 'Alice', 1);
+-- Test
+INSERT INTO ContractCategories (category_id, category_name) VALUES (1, 'Basic Plan');
+INSERT INTO ContractCategories (category_id, category_name) VALUES (2, 'Premium Plan');
+INSERT INTO CustomerType (customer_type) VALUES ('Bronze');
+INSERT INTO CustomerType (customer_type) VALUES ('Silver');
+INSERT INTO Contract (category_id, contract_code) VALUES (1, 'CT0001');
+INSERT INTO Contract (category_id, contract_code) VALUES (1, 'CT0002');
+INSERT INTO Contract (category_id, contract_code) VALUES (2, 'CT0002');
+-- Assuming you're going to link this sales record to a customer later
+INSERT INTO Customers (sales_id, customer_typeID, customer_code, customer_name, customer_email, customer_phoneNumber, customer_citizenID, contract_id, active_account) 
+VALUES (1, 1, 'CUST0001', 'John Doe', 'john@example.com', '555-1234', 123456789, 1, 'Yes');
+INSERT INTO Sales (sales_id, sales_name, customer_id) VALUES (1, 'Alice', 1);
 
--- -- Assuming John Doe has customer_id = 1
--- INSERT INTO CustomerActiveAccounts (customer_id, account_name, account_password) VALUES (1, 'john_doe_account', 'password123');
--- -- Insert an Order (Note: your design might need adjustment because customer_id should not be unique auto_increment here)
--- INSERT INTO Orders (order_id, customer_id, order_date, order_status) VALUES (1, 1, '2024-03-29', 'Processed');
+-- Assuming John Doe has customer_id = 1
+INSERT INTO CustomerActiveAccounts (customer_id, account_name, account_password) VALUES (1, 'john_doe_account', 'password123');
+-- Insert an Order (Note: your design might need adjustment because customer_id should not be unique auto_increment here)
+INSERT INTO Orders (order_id, customer_id, order_date, order_status) VALUES (1, 1, '2024-03-29', 'Processed');
 
 
     
