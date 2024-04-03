@@ -25,12 +25,10 @@ const conn = mysql.createConnection({
 // });
 
 
-router.get('/api/home', authController.home);
+router.get('/home', authController.home)
 
 router.get('/details/:id', authController.details);
 
-router.get('/addCustomer', (req, res) => {
-  res.render('addCustomer.ejs');
-});
+// router.get('/addCustomer', authController.addCustomer);
 
 module.exports = router;

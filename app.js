@@ -22,11 +22,11 @@ app.use(cookieParser());
 app.use('/', require('./appMethod/pages'));
 app.use('/auth', require('./appMethod/auth'));
 
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'views' )));
 
 //TODO 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'pages', 'home.html'));
+    res.sendFile(path.join(__dirname, './views/pages/home.html'));
 });
 
 app.listen(8000, () => {

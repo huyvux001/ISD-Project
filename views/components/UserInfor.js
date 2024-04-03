@@ -13,18 +13,8 @@ function UserInfor() {
                 </div>
 
                 <div class="form-user__group">
-                    <label for="address">Address: </label>
-                    <input name="address" type="text" data-address placeholder="Address">
-                </div>
-
-                <div class="form-user__group">
                     <label for="CCCD">CCCD: </label>
                     <input name="CCCD" type="text" data-cc placeholder="CCCD">
-                </div>
-
-                <div class="form-user__group">
-                    <label for="bank">Bank account: </label>
-                    <input name="bank" type="text" data-bank placeholder="Bank account">
                 </div>
 
                 <div class="form-user__group">
@@ -33,13 +23,12 @@ function UserInfor() {
                 </div>
 
                 <div class="form-user__group">
-                    <label for="username">Username: </label>
-                    <input name="username" type="text" data-username placeholder="Username">
-                </div>
-
-                <div class="form-user__group">
-                    <label for="password">Password: </label>
-                    <input name="password" type="password" data-password placeholder="Password">
+                    <label for="customerType">Customer Type: </label>
+                    <select name="customerType" data-type>
+                        <option value="CN">Personal (CN)</option>
+                        <option value="DN">Enterprise</option>
+                        <option value="NONE">None</option>
+                    </select>
                 </div>
             </div>
 

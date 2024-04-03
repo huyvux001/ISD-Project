@@ -10,7 +10,7 @@ const router = express.Router();
 // TODO
 // router.post('/addCustomer', upload.single('file'), authController.isLoggedIn, authController.addCustomer )
 
-router.post('/addCustomer', upload.single('file'), authController.addCustomer )
+router.post('/', authController.addCustomer )
 
 router.post('/login', authController.login );
 

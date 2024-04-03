@@ -72,6 +72,7 @@ exports.logout = async (req, res) => {
 
 // IMPORTANT: The following functions are incomplete and should be used as a reference only.
 // TODO: View home page with all customers
+
 exports.home = async (req, res) => {
 
     conn.query(
@@ -81,45 +82,62 @@ exports.home = async (req, res) => {
                 console.error(error);
                 return res.status(500).send('Error fetching customers');
             }
-            console.log(results);
             return res.json(results)
         }
     );
 };
 
-// TODO: Add a new customer
+// TODO: Add a new customer, take the real date
+async function queryDatabaseForCustomerCount(dateString, typeAbbreviation) {
+    return Math.floor(Math.random() * 100); 
+}
+
+const generateCustomId = async (customerType, date) => {
+    const typeAbbreviation = customerType === 'CN' ? 'CN' : customerType === 'DN' ? 'DN' : 'NONE';
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+
+    const dateString = `${day}${month}${year}`;
+
+    const customerCountToday = await queryDatabaseForCustomerCount(dateString, typeAbbreviation);
+    const sequentialNumber = (customerCountToday + 1).toString().padStart(3, '0');
+
+    const customId = `${typeAbbreviation}${sequentialNumber}${dateString}`;
+    console.log(customId);
+    
+    return customId;
+};
+
+
 exports.addCustomer = async (req, res) => {
-    exports.addCustomerAndOrder = async (req, res) => {
-        const { name, email, phone, orderDetails } = req.body;
-    
-        const insertCustomerQuery = 
-            `INSERT INTO Customers (customer_name, customer_email, customer_phoneNumber)
-            VALUES (?, ?, ?)`
-        ;
-    
-        conn.query(insertCustomerQuery, [name, email, phone], (customerError, customerResults) => {
+    const { name, phone, cc, email, type } = req.body;
+    const saleID = 1;
+
+    try {
+        const date = new Date(); 
+        const customerCode = await generateCustomId(type, date);
+
+        const insertCustomerQuery = `
+            INSERT INTO Customers (sales_id, customer_typeID, contract_id, active_account, customer_code, customer_name, customer_phoneNumber, customer_citizenID, customer_email)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        conn.query(insertCustomerQuery, [saleID, saleID, saleID, saleID, customerCode, name, phone, cc, email], (customerError, customerResults) => {
             if (customerError) {
                 console.error(customerError);
                 return res.status(500).send('Error adding customer');
             }
-    
-            const customerId = customerResults.insertId; 
-            const insertOrderQuery = `
-                INSERT INTO Orders (customer_id, order_details)
-                VALUES (?, ?)
-            `;
-    
-            conn.query(insertOrderQuery, [customerId, orderDetails], (orderError, orderResults) => {
-                if (orderError) {
-                    console.error(orderError);
-                    return res.status(500).send('Error adding order for customer');
-                }
-    
-                res.redirect('/'); 
-            });
+            console.log(customerResults);
+            return res.json(customerResults);
         });
-    };
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server error');
+    }
 };
+
 
 
 // TODO: View a customer's details
@@ -136,14 +154,20 @@ exports.details = async (req, res) => {
 
         if (customerResults.length > 0) {
             const customer = customerResults[0];
-            const query = 'SELECT * FROM Orders WHERE customer_id = ?';
-            conn.query(query, [customerId], (error, orderResults) => {
+            const query = `
+                SELECT Customers.*, customeractiveaccounts.account_name
+                FROM Customers
+                LEFT JOIN customeractiveaccounts ON Customers.customer_id = customeractiveaccounts.customer_id
+                WHERE Customers.customer_id = ?
+            `;
+            conn.query(query, [customerId], (error, results) => {
                 if (error) {
                     console.error(error);
                     return res.status(500).send('Error fetching related details');
                 }
-                res.json({
-                    customer: customer, orders: orderResults
+                return res.json({
+                    customer: customer,
+                    CustomerActiveAccounts: results
                 });
             });
         } else {
