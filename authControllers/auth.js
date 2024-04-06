@@ -76,7 +76,7 @@ exports.logout = async (req, res) => {
 exports.home = async (req, res) => {
 
     conn.query(
-        'SELECT * FROM Customers',
+        'SELECT * FROM Customers Where is_deleted = FALSE',
         (error, results) => {
             if (error) {
                 console.error(error);
@@ -88,9 +88,24 @@ exports.home = async (req, res) => {
 };
 
 // TODO: Add a new customer, take the real date
-async function queryDatabaseForCustomerCount(dateString, typeAbbreviation) {
-    return Math.floor(Math.random() * 100); 
+async function queryDatabaseForCustomerCount(dateString) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT COUNT(*) AS count 
+            FROM Customers 
+            WHERE DATE_FORMAT(add_date, '%d%m%Y') = ?
+        `;
+        
+        conn.query(query, [dateString], (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results[0].count);
+            }
+        });
+    });
 }
+
 
 const generateCustomId = async (customerType, date) => {
     const typeAbbreviation = customerType === 'CN' ? 'CN' : customerType === 'DN' ? 'DN' : 'NONE';
@@ -101,11 +116,10 @@ const generateCustomId = async (customerType, date) => {
 
     const dateString = `${day}${month}${year}`;
 
-    const customerCountToday = await queryDatabaseForCustomerCount(dateString, typeAbbreviation);
+    const customerCountToday = await queryDatabaseForCustomerCount(dateString);
     const sequentialNumber = (customerCountToday + 1).toString().padStart(3, '0');
 
     const customId = `${typeAbbreviation}${sequentialNumber}${dateString}`;
-    console.log(customId);
     
     return customId;
 };
@@ -116,27 +130,27 @@ exports.addCustomer = async (req, res) => {
     const saleID = 1;
 
     try {
-        const date = new Date(); 
+        const date = new Date();
         const customerCode = await generateCustomId(type, date);
 
         const insertCustomerQuery = `
-            INSERT INTO Customers (sales_id, customer_typeID, contract_id, active_account, customer_code, customer_name, customer_phoneNumber, customer_citizenID, customer_email)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO Customers (sales_id, customer_typeID, contract_id, active_account, customer_code, customer_name, customer_phoneNumber, customer_citizenID, customer_email, add_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
-        conn.query(insertCustomerQuery, [saleID, saleID, saleID, saleID, customerCode, name, phone, cc, email], (customerError, customerResults) => {
+        conn.query(insertCustomerQuery, [saleID, saleID, saleID, saleID, customerCode, name, phone, cc, email, date], (customerError, customerResults) => {
             if (customerError) {
                 console.error(customerError);
                 return res.status(500).send('Error adding customer');
             }
-            console.log(customerResults);
-            return res.json(customerResults);
+            return res.json({ message: "Customer added successfully", customerCode });
         });
     } catch (error) {
         console.error(error);
         return res.status(500).send('Server error');
     }
 };
+
 
 
 
@@ -170,6 +184,46 @@ exports.details = async (req, res) => {
                     CustomerActiveAccounts: results
                 });
             });
+        } else {
+            return res.status(404).send('Customer not found');
+        }
+    });
+};
+
+//TODO: Soft delete the customer and move it to the trash can, it can recover before 10 days
+exports.deleteCustomer = async (req, res) => {
+    const customerId = req.params.id;
+
+    const deleteQuery = 'UPDATE Customers SET is_deleted = TRUE, deleted_at = NOW() WHERE customer_id = ?;';
+
+    conn.query(deleteQuery, [customerId], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Error deleting customer');
+        }
+
+        if (results.affectedRows > 0) {
+            return res.json({ message: 'Customer deleted successfully' });
+        } else {
+            return res.status(404).send('Customer not found');
+        }
+    });
+};
+
+//TODO: Recover the customer from the trash can if possible
+exports.recoverCustomer = async (req, res) => {
+    const customerId = req.params.id;
+
+    const recoverQuery = 'UPDATE Customers SET is_deleted = FALSE, deleted_at = NULL WHERE customer_id = ?;';
+
+    conn.query(recoverQuery, [customerId], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Error recovering customer');
+        }
+
+        if (results.affectedRows > 0) {
+            return res.json({ message: 'Customer recovered successfully' });
         } else {
             return res.status(404).send('Customer not found');
         }

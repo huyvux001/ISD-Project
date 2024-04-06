@@ -29,6 +29,7 @@ router.get('/home', authController.home)
 
 router.get('/details/:id', authController.details);
 
-// router.get('/addCustomer', authController.addCustomer);
+router.get('/trash', authController.deleteCustomer, authController.recoverCustomer);
+
 
 module.exports = router;
