@@ -143,7 +143,7 @@ exports.addCustomer = async (req, res) => {
                 console.error(customerError);
                 return res.status(500).send('Error adding customer');
             }
-            return res.json({ message: "Customer added successfully", customerCode });
+            return res.json({ message: "Customer added successfully" });
         });
     } catch (error) {
         console.error(error);
