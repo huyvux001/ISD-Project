@@ -6,15 +6,7 @@ const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
 
-// POST method
-// TODO
-// router.post('/addCustomer', upload.single('file'), authController.isLoggedIn, authController.addCustomer )
-
-router.post('/', authController.addCustomer )
-
-// router.post('/login', authController.login );
-
-// router.get('/logout', authController.logout);
+router.post('/', authController.addCustomer );
 
 
 module.exports = router;

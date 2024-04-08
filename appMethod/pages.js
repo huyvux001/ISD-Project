@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const express = require('express');
 const authController = require('../authControllers/auth');
-
+const path = require('path')
 const router = express.Router();
 
 const conn = mysql.createConnection({
@@ -10,26 +10,19 @@ const conn = mysql.createConnection({
   database: process.env.DATABASE
 });
 
-// GET method
-
-// router.get('/', authController.isLoggedIn, (req, res) => {
-//   res.render('home.ejs', {
-//     user: req.user
-//   });
-// });
-
-// router.get('/customer/:id', authController.isLoggedIn, authController.details);
-
-// router.get('/addCustomer', authController.isLoggedIn, (req, res) => {
-//   res.render('addCustomer.ejs');
-// });
-
 
 router.get('/home', authController.home)
 
+router.get('/trash/menu', authController.trash);
+router.get('/trash', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views', 'pages', 'trash.html'));
+});
+
+
+router.delete('/delete/:id', authController.deleteCustomer);
+
 router.get('/details/:id', authController.details);
 
-router.get('/trash', authController.deleteCustomer, authController.recoverCustomer);
-
+router.put('/recovery/:id', authController.recoverCustomer);
 
 module.exports = router;

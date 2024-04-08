@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 const md5 = require('md5');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const moment = require('moment');
 
 const conn = mysql.createConnection({
     user: process.env.DATABASE_USER,
@@ -240,7 +241,6 @@ exports.recoverCustomer = async (req, res) => {
 
 //TODO: Show the trash's customers
 exports.trash = async (req, res) => {
-
     conn.query(
         'SELECT * FROM Customers Where is_deleted = TRUE',
         (error, results) => {
@@ -248,7 +248,12 @@ exports.trash = async (req, res) => {
                 console.error(error);
                 return res.status(500).send('Error fetching customers');
             }
-            return res.json(results)
+            const formattedResults = results.map(customer => ({
+                ...customer,
+                deleted_at: moment(customer.deleted_at).format('YYYY-MM-DD HH:mm:ss')
+            }));
+            
+            return res.json(formattedResults);
         }
     );
 };
