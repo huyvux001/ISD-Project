@@ -389,3 +389,9 @@ h1 {
 	background-color: #add8e6;
 	color: #fff;
 }
+
+
+.customer-remove{
+	color: red;
+	margin-top: 22px;
+}

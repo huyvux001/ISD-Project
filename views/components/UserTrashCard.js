@@ -1,4 +1,4 @@
-function UserCards({users=[], buttonTitle ="remove"}){
+function UserTrashCards({users=[], buttonTitle ="remove"}){
     return `
         <div class="customer-cards">
             ${users.map(user => `
@@ -10,6 +10,7 @@ function UserCards({users=[], buttonTitle ="remove"}){
                             <div class="text">
                                 <h2>${user.customer_name}</h2>
                                 <span>${user.customer_phoneNumber}</span>
+                                <span>${user.deleted_at}</span>
                                 <hr>
                                 <span>${user.customer_email}</span>
                             </div>
@@ -25,4 +26,4 @@ function UserCards({users=[], buttonTitle ="remove"}){
     `
 }
 
-export default UserCards;
+export default UserTrashCards;

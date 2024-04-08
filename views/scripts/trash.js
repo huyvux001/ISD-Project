@@ -1,5 +1,6 @@
 const container = document.querySelector('.home-container');
 import UserCards from '../components/UserCard.js';
+import UserTrashCards from '../components/UserTrashCard.js';
 import UserDetail from '../components/UserDetail.js';
 import UserInfor from '../components/UserInfor.js';
 import PopUp from '../components/popup.js';
@@ -8,12 +9,12 @@ let body = document.querySelector('body')
 async function loadUserMenu() {
 	container.innerHTML = '';
 	return new Promise(async (resolve, reject) => {
-		const res = await fetch('http://localhost:8000/home');
+		const res = await fetch('http://localhost:8000/trash/menu');
 		const users = await res.json();
 		resolve(users);
 	})
 		.then((users) => {
-			container.innerHTML = UserCards({ users: users });
+			container.innerHTML = UserTrashCards({ users: users, buttonTitle:"Recovery" });
 		})
 		.then(() => {
 			const userNodes = document.querySelectorAll(
@@ -36,9 +37,9 @@ async function loadUserMenu() {
 						link: false,
 						isAdd: false,
 						hasClose: true,
-						type: 'Delete',
-						title:"Delete",
-						desc:'Delete the customer(' + userNode.dataset.name +').Customers in the trash will be permanently deleted after 10 days'
+						type: 'Recovery',
+						title:"Recovery",
+						desc:'Recovery the customer(' + userNode.dataset.name +'). Customer will be add back to the home page. Are you sure?',
 					})
 
 					const closeBtn = document.querySelector('[data-popup-close]');
@@ -50,13 +51,13 @@ async function loadUserMenu() {
 					}
 
 					okBtn.onclick = async() => {
-						const response = await fetch('http://localhost:8000/delete/'+id, {
-							method: 'delete'
+						const response = await fetch('http://localhost:8000/recovery/'+id, {
+							method: 'put'
 						});
 
 						const data = await response.json();
 
-						window.location.assign('http://localhost:8000/')
+						window.location.assign('http://localhost:8000/trash')
 					}
 				};
 			});
@@ -84,57 +85,4 @@ async function loadDetail({ id }) {
 		});
 }
 
-function loadUserForm() {
-	addUser.onclick = () => {
-		container.innerHTML = UserInfor();
-
-		const backButton =
-			document.querySelector('[data-back]');
-		const confirmButton = document.querySelector(
-			'[data-confirm]'
-		);
-		backButton.onclick = async () => await loadUserMenu();
-
-		/* Send form */
-		confirmButton.onclick = async () => {
-			/* Send form */
-			await sendForm();
-
-
-			/* Show popup */
-			const popUpHtml = PopUp({
-				title: 'You have been added',
-				desc: 'You have been added a new customer successfully',
-				link: true,
-				type: 'Add'
-			});
-
-			body.innerHTML+=popUpHtml;
-		};
-	};
-}
-
-async function sendForm() {
-	const name = document.querySelector('[data-name]');
-	const email = document.querySelector('[data-email]');
-	const phone = document.querySelector('[data-phone]');
-	const cc = document.querySelector('[data-cc]');
-	const type = document.querySelector('[data-type]');
-
-	await fetch('http://localhost:8000/auth', {
-		method: 'POST',
-		body: JSON.stringify({
-			name: name.value,
-			phone: phone.value,
-			email: email.value,
-			cc: cc.value,
-			type: type.value
-		}),
-        headers: {
-            "Content-Type": "application/json",
-        },
-	});
-}
-
 await loadUserMenu();
-loadUserForm();
