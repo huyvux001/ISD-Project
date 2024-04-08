@@ -179,10 +179,18 @@ exports.details = async (req, res) => {
                     console.error(error);
                     return res.status(500).send('Error fetching related details');
                 }
+                if (results.length === 0) {
+                    return res.json({
+                        customer: customer,
+                        CustomerActiveAccounts: "No active accounts found for this customer"
+                    });
+                }
+                else {
                 return res.json({
                     customer: customer,
                     CustomerActiveAccounts: results
                 });
+                }
             });
         } else {
             return res.status(404).send('Customer not found');
@@ -228,4 +236,19 @@ exports.recoverCustomer = async (req, res) => {
             return res.status(404).send('Customer not found');
         }
     });
+};
+
+//TODO: Show the trash's customers
+exports.trash = async (req, res) => {
+
+    conn.query(
+        'SELECT * FROM Customers Where is_deleted = TRUE',
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).send('Error fetching customers');
+            }
+            return res.json(results)
+        }
+    );
 };
