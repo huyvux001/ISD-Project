@@ -257,3 +257,5 @@ exports.trash = async (req, res) => {
         }
     );
 };
+
+//TODO: Edit the customer's details

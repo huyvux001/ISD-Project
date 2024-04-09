@@ -118,7 +118,7 @@ INSERT INTO Orders (order_id, customer_id, order_date, order_status) VALUES (1, 
 
 
 
-
+-- Query functions
 select * from customers;
 select * from contract;
 select * from contractcategories;

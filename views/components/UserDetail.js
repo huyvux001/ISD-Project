@@ -42,6 +42,7 @@ function UserDetail({user}){
                 </div>
             </div>
         </div>
+        <button data-back class="button-abc">Edit customer</button>
         <button data-back class="button-abc">Back to menu</button>
     `
 }

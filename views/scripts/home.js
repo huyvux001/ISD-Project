@@ -87,7 +87,6 @@ async function loadDetail({ id }) {
 function loadUserForm() {
 	addUser.onclick = () => {
 		container.innerHTML = UserInfor();
-
 		const backButton =
 			document.querySelector('[data-back]');
 		const confirmButton = document.querySelector(
@@ -97,44 +96,66 @@ function loadUserForm() {
 
 		/* Send form */
 		confirmButton.onclick = async () => {
-			/* Send form */
-			await sendForm();
-
-
-			/* Show popup */
-			const popUpHtml = PopUp({
-				title: 'You have been added',
-				desc: 'You have been added a new customer successfully',
-				link: true,
-				type: 'Add'
+			const formSubmittedSuccessfully = await sendForm();
+			if (formSubmittedSuccessfully) {
+				const popUpHtml = PopUp({
+					title: 'You have been added',
+					desc: 'You have been added a new customer successfully',
+					link: true,
+					type: 'Add'
+				});
+				body.innerHTML += popUpHtml;
+			}
+			else 
+			{const popUpFalse = PopUp({
+				title: 'Error',
+				desc: 'All fields must be filled out, and a valid customer type selected.',
+				ctinue: true,
+				type: 'Error'
 			});
-
-			body.innerHTML+=popUpHtml;
+			body.innerHTML += popUpFalse;
+			
+		}
 		};
+		
 	};
 }
 
 async function sendForm() {
-	const name = document.querySelector('[data-name]');
-	const email = document.querySelector('[data-email]');
-	const phone = document.querySelector('[data-phone]');
-	const cc = document.querySelector('[data-cc]');
-	const type = document.querySelector('[data-type]');
+    const name = document.querySelector('[data-name]');
+    const email = document.querySelector('[data-email]');
+    const phone = document.querySelector('[data-phone]');
+    const cc = document.querySelector('[data-cc]');
+    const type = document.querySelector('[data-type]');
 
-	await fetch('http://localhost:8000/auth', {
-		method: 'POST',
-		body: JSON.stringify({
-			name: name.value,
-			phone: phone.value,
-			email: email.value,
-			cc: cc.value,
-			type: type.value
-		}),
-        headers: {
-            "Content-Type": "application/json",
-        },
-	});
-}
+    if (!name.value || !email.value || !phone.value || !cc.value || type.value === 'NONE') { 
+        return false; 
+		
+    }
+
+    try {
+        const response = await fetch('http://localhost:8000/auth', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: name.value,
+                phone: phone.value,
+                email: email.value,
+                cc: cc.value,
+                type: type.value
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Server responded with an error.');
+        }
+        return true;
+    } catch (error) {
+        console.error("Failed to submit form:", error);
+        return false; 
+}};
+
 
 await loadUserMenu();
 loadUserForm();
