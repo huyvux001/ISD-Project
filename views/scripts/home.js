@@ -36,6 +36,7 @@ async function loadUserMenu() {
 						link: false,
 						isAdd: false,
 						hasClose: true,
+						ctinue: false,
 						type: 'Delete',
 						title:"Delete",
 						desc:'Delete the customer(' + userNode.dataset.name +').Customers in the trash will be permanently deleted after 10 days'

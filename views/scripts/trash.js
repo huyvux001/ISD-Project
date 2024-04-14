@@ -37,6 +37,7 @@ async function loadUserMenu() {
 						link: false,
 						isAdd: false,
 						hasClose: true,
+						ctinue: false,
 						type: 'Recovery',
 						title:"Recovery",
 						desc:'Recovery the customer(' + userNode.dataset.name +'). Customer will be add back to the home page. Are you sure?',

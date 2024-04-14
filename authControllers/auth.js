@@ -259,3 +259,38 @@ exports.trash = async (req, res) => {
 };
 
 //TODO: Edit the customer's details
+exports.editCustomer = async (req, res) => {
+    const customerId = req.params.id;
+    const updates = req.body;
+    let query = 'UPDATE Customers SET ';
+    let queryParams = [];
+    let updatedField = [];
+
+    Object.keys(updates).forEach(key => {
+        if (['name', 'email', 'phone', 'cc'].includes(key)) {
+            updatedField.push(`customer_${key} = ?`);
+            queryParams.push(updates[key]);
+        }
+    });
+
+    if (updatedField.length === 0) {
+        return res.status(400).send('No valid fields provided for update');
+    }
+
+    query += updatedField.join(', ');
+    query += ' WHERE customer_id = ?';
+    queryParams.push(customerId);
+
+    conn.query(query, queryParams, (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Error updating customer');
+        }
+
+        if (results.affectedRows > 0) {
+            return res.json({ message: 'Customer updated successfully' });
+        } else {
+            return res.status(404).send('Customer not found');
+        }
+    });
+};

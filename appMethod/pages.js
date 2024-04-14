@@ -25,4 +25,6 @@ router.get('/details/:id', authController.details);
 
 router.put('/recovery/:id', authController.recoverCustomer);
 
+router.patch('/update/:id', authController.editCustomer);
+
 module.exports = router;
