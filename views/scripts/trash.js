@@ -4,7 +4,6 @@ import UserTrashCards from '../components/UserTrashCard.js';
 import UserDetail from '../components/UserDetail.js';
 import UserInfor from '../components/UserInfor.js';
 import PopUp from '../components/popup.js';
-const addUser = document.querySelector('[data-add-user]');
 let body = document.querySelector('body')
 async function loadUserMenu() {
 	container.innerHTML = '';
