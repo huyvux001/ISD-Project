@@ -77,7 +77,7 @@ exports.logout = async (req, res) => {
 exports.home = async (req, res) => {
 
     conn.query(
-        'SELECT * FROM Customers Where is_deleted = FALSE',
+        'SELECT * FROM Customers Where is_deleted = FALSE order by customer_id desc;',
         (error, results) => {
             if (error) {
                 console.error(error);
@@ -267,7 +267,7 @@ exports.editCustomer = async (req, res) => {
     let updatedField = [];
 
     Object.keys(updates).forEach(key => {
-        if (['name', 'email', 'phone', 'cc'].includes(key)) {
+        if (['name', 'email', 'phoneNumber', 'citizenID'].includes(key)) {
             updatedField.push(`customer_${key} = ?`);
             queryParams.push(updates[key]);
         }

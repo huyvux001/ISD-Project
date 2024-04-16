@@ -1,14 +1,16 @@
-function UserDetail({user}){
+function UserDetail({ user, mode = 'normal' }) {
     const customer = user.customer;
     const CustomerAC = user.CustomerActiveAccounts;
-    const accountsHtml = CustomerAC.map(ac => `
+    const accountsHtml = CustomerAC.map(
+        (ac) => `
         <div class="user-detail__content">
             <div class="block">
                 <div class="prop">Account Name:</div>
                 <div class="value">${ac.account_name}</div>
             </div>
         </div>
-    `).join(''); 
+    `
+    ).join('');
     return `
         <div class="user-detail">
             <h2>Thông tin tài khoản active</h2>
@@ -38,13 +40,28 @@ function UserDetail({user}){
                 </div>
                 <div class="block">
                     <div class="prop">Phone:</div>
-                    <div class="value">${customer.customer_phoneNumber}</div>
+                    <div class="value">${
+                        customer.customer_phoneNumber
+                    }</div>
                 </div>
             </div>
         </div>
-        <button data-back class="button-abc">Edit customer</button>
         <button data-back class="button-abc">Back to menu</button>
-    `
+        ${
+            mode !== 'trash'
+                ? `
+            <button
+                    data-back
+                    class='button-abc'
+                    data-edit-detail>
+                    Edit customer
+                </button>
+            `
+                : ''
+        }
+    `;
 }
+
+function button() {}
 
 export default UserDetail;
