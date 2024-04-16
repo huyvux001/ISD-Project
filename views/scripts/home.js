@@ -177,15 +177,27 @@ function loadUserForm({ mode = 'add' }) {
         } else {
             const popUpFalse = PopUp({
                 title: 'Error',
-                desc: 'All fields must be filled out, and a valid customer type selected.',
+                desc: 'All fields must be filled out correctly. Please check again',
                 type: 'Error',
                 hasClose: true,
+                isAdd: false,
+                ctinue: false,
             });
 
             body.innerHTML += popUpFalse;
             
             const closeBtn = document.querySelector('[data-popup-close]');
+            const okBtn = document.querySelector('[data-ok]');
+            const cancelBtn = document.querySelector('[data-cancel]');
             closeBtn.onclick = async () => {
+                body.innerHTML = initialHTML;
+                loadUserForm({ mode: 'add' });
+            };
+            okBtn.onclick = async () => {
+                body.innerHTML = initialHTML;
+                loadUserForm({ mode: 'add' });
+            };
+            cancelBtn.onclick = async () => {
                 body.innerHTML = initialHTML;
                 loadUserForm({ mode: 'add' });
             };
@@ -205,15 +217,16 @@ async function sendForm({
 
     console.log('name::', name.value);
     console.log('type::', type.value);
-    if (
-        !name.value ||
-        !email.value ||
-        !phone.value ||
-        !cc.value ||
-        type.value === 'NONE'
-    ) {
+    // Email validation pattern
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    // Check if any field is empty or if email does not match the pattern
+    if (!name.value || !phone.value || !cc.value || type.value === 'NONE' ||
+        !email.value || !emailPattern.test(email.value)) {
+        console.error('Validation failed: All fields must be filled correctly.');
         return false;
     }
+
 
     try {
         const response = await fetch(url, {

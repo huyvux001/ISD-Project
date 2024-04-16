@@ -30,7 +30,7 @@ function PopUp({
             }
             ${
                 ctinue
-                    ? `<button data-back-to-detail class="button">Back to Details</button>`
+                    ? `<button data-back-to-detail class="button" style="margin: 0 auto;text-align: center;right: 0;left: 0;position: absolute;margin-top:40px;">Back to Details</button>`
                     : ''
             }
             ${

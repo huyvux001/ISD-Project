@@ -9,17 +9,17 @@ function UserInfor() {
 
                 <div class="form-user__group">
                     <label for="phone">Phone number: </label>
-                    <input name="phone" type="text" data-phone placeholder="Phone number">
+                    <input name="phone" type="number" data-phone placeholder="Phone number" required>
                 </div>
 
                 <div class="form-user__group">
                     <label for="CCCD">CCCD: </label>
-                    <input name="CCCD" type="text" data-cc placeholder="CCCD">
+                    <input name="CCCD" type="number" data-cc placeholder="CCCD" required>
                 </div>
 
                 <div class="form-user__group">
                     <label for="email">Email: </label>
-                    <input name="email" type="text" data-email placeholder="Email">
+                    <input name="email" type="email" data-email placeholder="Email" required>
                 </div>
 
                 <div class="form-user__group">
