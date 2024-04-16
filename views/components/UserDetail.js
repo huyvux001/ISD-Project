@@ -35,8 +35,8 @@ function UserDetail({ user, mode = 'normal' }) {
                     <div class="value">${customer.customer_citizenID}</div>
                 </div>
                 <div class="block">
-                    <div class="prop">Email</div>
-                    <div class="value">q${customer.customer_email}</div>
+                    <div class="prop">Email:</div>
+                    <div class="value">${customer.customer_email}</div>
                 </div>
                 <div class="block">
                     <div class="prop">Phone:</div>

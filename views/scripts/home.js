@@ -101,6 +101,7 @@ async function loadDetail({ id }) {
 }
 
 function loadUserForm({ mode = 'add' }) {
+    
     const container = document.querySelector('.home-container');
     let initialHTML = body.innerHTML;
     container.innerHTML = UserInfor();
@@ -117,10 +118,19 @@ function loadUserForm({ mode = 'add' }) {
         cc.value = curUser.customer_citizenID;
         const type = container.querySelector('[data-type]');
         type.value = 'CN';
+        
     }
-
     const backButton = container.querySelector('[data-back]');
     const confirmButton = container.querySelector('[data-confirm]');
+
+    // NEED TO FIX
+    // const backtoMenuButton = document.querySelector('.button-abc');
+
+    // backtoMenuButton.onclick = async () => {
+    //     await loadUserMenu();
+    // };
+   
+
     backButton.onclick = async () => {
         if (mode === 'add') {
             await loadUserMenu();
@@ -174,6 +184,7 @@ function loadUserForm({ mode = 'add' }) {
                         .customer_id,
                 });
             };
+            
         } else {
             const popUpFalse = PopUp({
                 title: 'Error',
