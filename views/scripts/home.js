@@ -85,12 +85,12 @@ async function loadDetail({ id }) {
             return true;
         })
         .then(() => {
-            const backButton = document.querySelector('.button-abc');
+            const backtoMenuButton = document.querySelector('[data-menu-back]');
 
             const editButton = document.querySelector(
                 '[data-edit-detail]'
             );
-            backButton.onclick = async () => {
+            backtoMenuButton.onclick = async () => {
                 await loadUserMenu();
             };
 
@@ -122,14 +122,6 @@ function loadUserForm({ mode = 'add' }) {
     }
     const backButton = container.querySelector('[data-back]');
     const confirmButton = container.querySelector('[data-confirm]');
-
-    // NEED TO FIX
-    // const backtoMenuButton = document.querySelector('.button-abc');
-
-    // backtoMenuButton.onclick = async () => {
-    //     await loadUserMenu();
-    // };
-   
 
     backButton.onclick = async () => {
         if (mode === 'add') {

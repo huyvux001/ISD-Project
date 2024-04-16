@@ -46,12 +46,12 @@ function UserDetail({ user, mode = 'normal' }) {
                 </div>
             </div>
         </div>
-        <button data-back class="button-abc">Back to menu</button>
+        <button data-menu-back class="button-abc">Back to menu</button>
         ${
             mode !== 'trash'
                 ? `
             <button
-                    data-back
+                    data-menu-back
                     class='button-abc'
                     data-edit-detail>
                     Edit customer
