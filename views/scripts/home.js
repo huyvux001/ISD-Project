@@ -183,11 +183,11 @@ function loadUserForm({ mode = 'add' }) {
             });
 
             body.innerHTML += popUpFalse;
-
+            
             const closeBtn = document.querySelector('[data-popup-close]');
             closeBtn.onclick = async () => {
                 body.innerHTML = initialHTML;
-                loadUserForm({ mode: 'edit' });
+                loadUserForm({ mode: 'add' });
             };
         }
     };
