@@ -6,7 +6,7 @@ function UserDetail({ user, mode = 'normal' }) {
         <div class="user-detail__content">
             <div class="block">
                 <div class="prop">Account Name:</div>
-                <div class="value">${ac.account_name}</div>
+                <div class="value">${ac.username}</div>
             </div>
         </div>
     `

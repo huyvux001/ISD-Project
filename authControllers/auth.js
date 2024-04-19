@@ -135,11 +135,11 @@ exports.addCustomer = async (req, res) => {
         const customerCode = await generateCustomId(type, date);
 
         const insertCustomerQuery = `
-            INSERT INTO Customers (sales_id, customer_typeID, contract_id, active_account, customer_code, customer_name, customer_phoneNumber, customer_citizenID, customer_email, add_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Customers (sales_id, customer_type, customer_code, customer_name, customer_email, customer_phoneNumber, customer_citizenID, add_date, website_account_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
-        conn.query(insertCustomerQuery, [saleID, saleID, saleID, saleID, customerCode, name, phone, cc, email, date], (customerError, customerResults) => {
+        conn.query(insertCustomerQuery, [saleID, type, customerCode, name, email, phone, cc, date, saleID], (customerError, customerResults) => {
             if (customerError) {
                 console.error(customerError);
                 return res.status(500).send('Error adding customer');
@@ -170,9 +170,9 @@ exports.details = async (req, res) => {
         if (customerResults.length > 0) {
             const customer = customerResults[0];
             const query = `
-                SELECT Customers.*, customeractiveaccounts.account_name
+                SELECT Customers.*, WebsiteAccounts.username
                 FROM Customers
-                LEFT JOIN customeractiveaccounts ON Customers.customer_id = customeractiveaccounts.customer_id
+                LEFT JOIN WebsiteAccounts ON Customers.website_account_id= WebsiteAccounts.account_id
                 WHERE Customers.customer_id = ?
             `;
             conn.query(query, [customerId], (error, results) => {

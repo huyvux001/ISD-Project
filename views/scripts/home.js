@@ -122,6 +122,7 @@ function loadUserForm({ mode = 'add' }) {
     }
     const backButton = container.querySelector('[data-back]');
     const confirmButton = container.querySelector('[data-confirm]');
+    
 
     backButton.onclick = async () => {
         if (mode === 'add') {
@@ -218,8 +219,6 @@ async function sendForm({
     const cc = document.querySelector('[data-cc]');
     const type = document.querySelector('[data-type]');
 
-    console.log('name::', name.value);
-    console.log('type::', type.value);
     // Email validation pattern
     const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -236,8 +235,8 @@ async function sendForm({
             method,
             body: JSON.stringify({
                 name: name.value,
-                phone: phone.value,
                 email: email.value,
+                phone: phone.value,
                 cc: cc.value,
                 type: type.value,
             }),
