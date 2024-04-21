@@ -294,3 +294,36 @@ exports.editCustomer = async (req, res) => {
         }
     });
 };
+
+//TODO: Show the products showcase
+exports.productsShowcase = async (req, res) => {
+    conn.query("SELECT * FROM Shoes", (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Error fetching products');
+        }
+
+        return res.json(results);
+    }
+)};
+
+// TODO: Show the customer's orders
+exports.customerOrders = async (req, res) => {
+    const customerId = req.params.id;
+
+    const query = `
+        SELECT Orders.*, Shoes.*
+        FROM Orders
+        JOIN Shoes ON Orders.shoes_id = Shoes.shoes_id
+        WHERE Orders.customer_id = ?
+    `;
+
+    conn.query(query, [customerId], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Error fetching orders');
+        }
+
+        return res.json(results);
+    });
+};

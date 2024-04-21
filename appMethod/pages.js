@@ -13,6 +13,8 @@ const conn = mysql.createConnection({
 
 router.get('/home', authController.home)
 
+router.get('/products', authController.productsShowcase);
+
 router.get('/trash/menu', authController.trash);
 router.get('/trash', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'views', 'pages', 'trash.html'));
@@ -26,5 +28,7 @@ router.get('/details/:id', authController.details);
 router.put('/recovery/:id', authController.recoverCustomer);
 
 router.patch('/update/:id', authController.editCustomer);
+
+router.get('/customerOrders/:id', authController.customerOrders);
 
 module.exports = router;
