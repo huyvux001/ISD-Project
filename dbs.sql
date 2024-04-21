@@ -100,18 +100,51 @@ DELIMITER ;
 
 
 -- Test
-select * from customers;
-select * from orders;
-select * from shoes;
-select * from shoeimages;
-select * from salespersons;
-select * from adminsalesaccounts;
-select * from websiteaccounts;
+-- select * from customers;
+-- select * from orders;
+-- select * from shoes;
+-- select * from ShoeImages;
+-- select * from salespersons;
+-- select * from adminsalesaccounts;
+-- select * from websiteaccounts;
 
+-- Insert data
+INSERT INTO Salespersons (sales_id, sales_name) VALUES (1, 'John Doe');
+INSERT INTO Salespersons (sales_id, sales_name) VALUES (2, 'Jane Smith');
+INSERT INTO WebsiteAccounts (username, password, active_status) VALUES ('user1', 'password1', TRUE);
+INSERT INTO WebsiteAccounts (username, password, active_status) VALUES ('user2', 'password2', FALSE);
+INSERT INTO Customers (sales_id, customer_type, customer_code, customer_name, customer_email, customer_phoneNumber, customer_citizenID, add_date, website_account_id) VALUES (1, 'Individual', 'CUST001', 'Alice Brown', 'alice@example.com', '555-0101', '123456789', '2023-04-01', 1);
+INSERT INTO Customers (sales_id, customer_type, customer_code, customer_name, customer_email, customer_phoneNumber, customer_citizenID, add_date, website_account_id) VALUES (2, 'Corporate', 'CUST002', 'Bob Green', 'bob@example.com', '555-0202', '987654321', '2023-04-02', 2);
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Nike', 'Air Max', 'Running', '9', 'Black', 'Synthetic', 199.99, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Adidas', 'Ultra Boost', 'Running', '10', 'White', 'Mesh', 180.50, 'Available');
+INSERT INTO ShoeImages (shoes_id, image_url) VALUES (1, 'http://example.com/image1.jpg');
+INSERT INTO ShoeImages (shoes_id, image_url) VALUES (2, 'http://example.com/image2.jpg');
+INSERT INTO Orders (order_code, customer_id, shoes_id, order_amount, order_cost, order_buyDate, payment_status, payment_date, shipment_date, shipment_process) VALUES ('ORD001', 1, 1, 2, 399.98, '2023-04-10', 'Paid', '2023-04-10', '2023-04-12', 'Shipped');
+INSERT INTO Orders (order_code, customer_id, shoes_id, order_amount, order_cost, order_buyDate, payment_status, payment_date, shipment_date, shipment_process) VALUES ('ORD002', 2, 2, 1, 180.50, '2023-04-11', 'Pending', NULL, NULL, 'Preparing for shipment');
+INSERT INTO AdminSalesAccounts (username, password, role) VALUES ('admin1', 'securepass1', 'admin');
+INSERT INTO AdminSalesAccounts (username, password, role) VALUES ('sales1', 'securepass2', 'sales');
 
-
-
-
+-- Insert dato to shoes table
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Nike', 'Air Max', 'Running', '9', 'Black', 'Synthetic', 199.99, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Adidas', 'Ultra Boost', 'Running', '10', 'White', 'Mesh', 180.50, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Reebok', 'Classic', 'Casual', '8', 'Navy', 'Leather', 75.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Puma', 'Speed Cat', 'Casual', '11', 'Red', 'Suede', 85.99, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('New Balance', '574', 'Casual', '9.5', 'Grey', 'Synthetic', 70.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Asics', 'Gel-Nimbus', 'Running', '9', 'Blue', 'Mesh', 130.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Saucony', 'Jazz Original', 'Running', '10', 'Green', 'Nylon', 60.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Brooks', 'Ghost', 'Running', '11', 'Black', 'Mesh', 120.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Hoka One One', 'Clifton', 'Running', '10.5', 'Orange', 'Mesh', 140.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Under Armour', 'Charged Assert', 'Running', '9', 'White', 'Synthetic', 90.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Nike', 'ZoomX', 'Running', '9', 'Pink', 'Synthetic', 250.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Adidas', 'Stan Smith', 'Casual', '8', 'White', 'Leather', 80.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Vans', 'Old Skool', 'Skateboarding', '10', 'Black', 'Canvas', 60.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Converse', 'Chuck Taylor', 'Casual', '11', 'Red', 'Canvas', 55.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Puma', 'Ignite', 'Running', '9.5', 'Blue', 'Mesh', 100.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Timberland', 'Classic Boots', 'Outdoor', '11', 'Brown', 'Leather', 175.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Merrell', 'Moab 2', 'Hiking', '10', 'Earth', 'Suede', 120.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Skechers', 'Go Walk', 'Walking', '8', 'Black', 'Mesh', 50.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Altra', 'Torin', 'Running', '9', 'Grey', 'Mesh', 130.00, 'Available');
+INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color, shoes_material, shoes_price, shoes_status) VALUES ('Salomon', 'Speedcross', 'Trail Running', '10', 'Black', 'Mesh', 130.00, 'Available');
 
 
 
