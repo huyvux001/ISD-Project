@@ -297,15 +297,34 @@ exports.editCustomer = async (req, res) => {
 
 //TODO: Show the products showcase
 exports.productsShowcase = async (req, res) => {
-    conn.query("SELECT * FROM Shoes", (error, results) => {
+    const shoesPerPage = 9; 
+    const page = req.query.page || 1; 
+
+    conn.query("SELECT COUNT(*) AS count FROM Shoes", (error, countResult) => {
         if (error) {
             console.error(error);
-            return res.status(500).send('Error fetching products');
+            return res.status(500).send('Error fetching product count');
         }
 
-        return res.json(results);
-    }
-)};
+        const totalCount = countResult[0].count;
+        const totalPages = Math.ceil(totalCount / shoesPerPage);
+        const offset = (page - 1) * shoesPerPage;
+
+        conn.query("SELECT * FROM Shoes LIMIT ? OFFSET ?", [shoesPerPage, offset], (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).send('Error fetching products');
+            }
+
+            return res.json({
+                shoes: results,
+                totalItems: totalCount,
+                totalPages: totalPages,
+                currentPage: parseInt(page)
+            });
+        });
+    });
+};
 
 // TODO: Show the customer's orders
 exports.customerOrders = async (req, res) => {
