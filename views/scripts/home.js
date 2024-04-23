@@ -6,6 +6,7 @@ import PopUp from '../components/popup.js';
 const addUser = document.querySelector('[data-add-user]');
 let body = document.querySelector('body');
 async function loadUserMenu() {
+    const container = document.querySelector('.home-container');
     container.innerHTML = '';
     return new Promise(async (resolve, reject) => {
         const res = await fetch('http://localhost:8000/home');
@@ -86,7 +87,6 @@ async function loadDetail({ id }) {
         })
         .then(() => {
             const backtoMenuButton = document.querySelector('[data-menu-back]');
-
             const editButton = document.querySelector(
                 '[data-edit-detail]'
             );
