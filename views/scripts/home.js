@@ -101,7 +101,7 @@ async function loadDetail({ id }) {
 }
 
 function loadUserForm({ mode = 'add' }) {
-    
+
     const container = document.querySelector('.home-container');
     let initialHTML = body.innerHTML;
     container.innerHTML = UserInfor();
@@ -118,11 +118,11 @@ function loadUserForm({ mode = 'add' }) {
         cc.value = curUser.customer_citizenID;
         const type = container.querySelector('[data-type]');
         type.value = 'CN';
-        
+
     }
     const backButton = container.querySelector('[data-back]');
     const confirmButton = container.querySelector('[data-confirm]');
-    
+
 
     backButton.onclick = async () => {
         if (mode === 'add') {
@@ -177,7 +177,7 @@ function loadUserForm({ mode = 'add' }) {
                         .customer_id,
                 });
             };
-            
+
         } else {
             const popUpFalse = PopUp({
                 title: 'Error',
@@ -189,22 +189,58 @@ function loadUserForm({ mode = 'add' }) {
             });
 
             body.innerHTML += popUpFalse;
-            
+
             const closeBtn = document.querySelector('[data-popup-close]');
             const okBtn = document.querySelector('[data-ok]');
             const cancelBtn = document.querySelector('[data-cancel]');
             closeBtn.onclick = async () => {
                 body.innerHTML = initialHTML;
+
                 loadUserForm({ mode: 'add' });
+
+                const backButton = document.querySelector('[data-back]');
+                backButton.onclick = async() => {
+                    if (mode === 'add') {
+                        await loadUserMenu();
+                    } else {
+                        await loadDetail({
+                            id: localStorage.getItem('user_id'),
+                        });
+                    }
+                }
             };
             okBtn.onclick = async () => {
                 body.innerHTML = initialHTML;
                 loadUserForm({ mode: 'add' });
+
+                const backButton = document.querySelector('[data-back]');
+                backButton.onclick = async() => {
+                    if (mode === 'add') {
+                        await loadUserMenu();
+                    } else {
+                        await loadDetail({
+                            id: localStorage.getItem('user_id'),
+                        });
+                    }
+                }
             };
             cancelBtn.onclick = async () => {
                 body.innerHTML = initialHTML;
                 loadUserForm({ mode: 'add' });
+
+                const backButton = document.querySelector('[data-back]');
+                backButton.onclick = async() => {
+                    if (mode === 'add') {
+                        await loadUserMenu();
+                    } else {
+                        await loadDetail({
+                            id: localStorage.getItem('user_id'),
+                        });
+                    }
+                }
             };
+
+
         }
     };
 }

@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Shoes (
     shoes_id INT AUTO_INCREMENT PRIMARY KEY,
     shoes_brand VARCHAR(255),
     shoes_name VARCHAR(255) NOT NULL,
-    shoes_type VARCHAR(255),  
+    shoes_type VARCHAR(255),
     shoes_size VARCHAR(10),
     shoes_color VARCHAR(50),
     shoes_material VARCHAR(255),
@@ -149,5 +149,4 @@ INSERT INTO Shoes (shoes_brand, shoes_name, shoes_type, shoes_size, shoes_color,
 
 
 
-    
-	
+

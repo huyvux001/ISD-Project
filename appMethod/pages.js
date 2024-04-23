@@ -19,6 +19,13 @@ router.get('/trash/menu', authController.trash);
 router.get('/trash', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'views', 'pages', 'trash.html'));
 });
+router.get('/orders', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views', 'pages', 'orders.html'));
+});
+router.get('/page/products', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views', 'pages', 'products.html'));
+});
+
 
 
 router.delete('/delete/:id', authController.deleteCustomer);
